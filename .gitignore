@@ -1,0 +1,6 @@
+backend/go.sum
+backend/.env
+
+frontend/package-lock.json
+frontend/.env.local
+frontend/node_modules
