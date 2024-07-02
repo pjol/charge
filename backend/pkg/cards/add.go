@@ -31,6 +31,7 @@ func (s *Service) Add(w http.ResponseWriter, r *http.Request) {
 	err = addCard(s.db, card)
 	if err != nil {
 		fmt.Println("error adding card: ", err)
+		w.WriteHeader(http.StatusBadRequest)
 		return
 	}
 

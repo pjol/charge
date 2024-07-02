@@ -6,6 +6,7 @@ import (
 	"os"
 
 	_ "github.com/mattn/go-sqlite3"
+	"github.com/pjol/charge/backend/pkg/cards"
 )
 
 func InitDB(name string) (*sql.DB, error) {
@@ -26,9 +27,11 @@ func InitDB(name string) (*sql.DB, error) {
 	fmt.Printf("connecting to %s db...\n", name)
 
 	db, err := sql.Open("sqlite3", fmt.Sprintf("file:%s", dbPath))
+	if err != nil {
+		return nil, err
+	}
 
-	InitTables(name, db)
-
+	err = InitTables(name, db)
 	if err != nil {
 		return nil, err
 	}
@@ -52,24 +55,16 @@ func Exists(path string) bool {
 	return exists
 }
 
-func InitTables(name string, db *sql.DB) {
+func InitTables(name string, db *sql.DB) error {
 	// db.Exec(fmt.Sprintf("CREATE DATABASE %s", name))
 	switch name {
 	case "cards":
-		_, err := db.Exec(`
-			CREATE TABLE IF NOT EXISTS cards (
-				name string PRIMARY KEY,
-				type string NOT NULL,
-				cost int,
-				text string,
-				image string,
-				stat1 string,
-				stat2 string
-			)
-		`)
+		err := cards.CreateTables(db)
 
 		if err != nil {
-			fmt.Printf("error creating cards table: %s\n", err)
+			return err
 		}
+
 	}
+	return nil
 }
