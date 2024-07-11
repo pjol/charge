@@ -17,8 +17,8 @@ func AppRouter() *chi.Mux {
 	r.Use(cors.Handler(cors.Options{
 		AllowedOrigins:   []string{"http://localhost:3000", "https://localhost:3000"},
 		AllowedMethods:   []string{"GET", "POST", "PUT", "DELETE", "OPTIONS"},
-		AllowedHeaders:   []string{"Accept", "Authorization", "Content-Type", "X-CSRF-Token"},
-		ExposedHeaders:   []string{"Link"},
+		AllowedHeaders:   []string{"Accept", "Authorization", "Content-Type", "X-CSRF-Token", "Card-Count"},
+		ExposedHeaders:   []string{"Link", "Card-Count"},
 		AllowCredentials: false,
 		MaxAge:           300,
 	}))
@@ -39,6 +39,7 @@ func AppRouter() *chi.Mux {
 	cards := cards.NewService(cardsDb)
 
 	r.Route("/cards", func(r chi.Router) {
+		r.Use(cards.GetCountMiddleware())
 		r.Get("/", cards.Get)
 		r.Post("/", cards.Add)
 	})

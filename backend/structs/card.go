@@ -1,6 +1,7 @@
 package structs
 
 type Card struct {
+	Id    *int    `json:"id"`
 	Name  *string `json:"name"`
 	Type  *string `json:"type"`
 	Cost  *int    `json:"cost"`

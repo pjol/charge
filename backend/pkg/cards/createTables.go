@@ -8,9 +8,10 @@ import (
 func CreateTables(db *sql.DB) error {
 	_, err := db.Exec(`
 	CREATE TABLE IF NOT EXISTS cards (
-		name string PRIMARY KEY,
+		id integer PRIMARY KEY AUTOINCREMENT,
+		name string,
 		type string NOT NULL,
-		cost int,
+		cost integer,
 		text string,
 		image string,
 		stat1 string,
