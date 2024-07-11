@@ -49,15 +49,14 @@ export default function CreateCardPage() {
 
   const cardEditorStyle = {
     display: "grid",
-    gridTemplateColumns: "1fr 2fr"
+    gridTemplateColumns: "1fr 2fr",
+    textAlign: "left"
   }
 
   const formStyle = {
     display: "grid",
     gridTemplateColumns: "1fr",
-    "& label": {
-      marginTop: "10px"
-    }
+    textAlign: "left"
   }
 
   return (
@@ -68,7 +67,7 @@ export default function CreateCardPage() {
       <form onSubmit={postCard}>
         <label>
           Type:
-          <select style={formStyle} type="text" placeholder="type" value={type} onChange={(e) => {
+          <select style={{display: "inline"}} type="text" placeholder="type" value={type} onChange={(e) => {
             setType(e.target.value)
           }}>
             <option value="" selected disabled hidden>Choose Type</option>
@@ -117,7 +116,7 @@ export default function CreateCardPage() {
               setStat2(e.target.value * 1 || 0)
             }}/>
           </label>
-          <button type="submit">Save</button>
+          <button style={{}} type="submit">SAVE</button>
         </div>}
       </form>
       <div>{error}</div>

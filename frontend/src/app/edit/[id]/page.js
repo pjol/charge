@@ -73,7 +73,8 @@ export default function EditCardPage({params}) {
 
   const cardEditorStyle = {
     display: "grid",
-    gridTemplateColumns: "1fr 2fr"
+    gridTemplateColumns: "1fr 2fr",
+    textAlign: "left"
   }
 
   const formStyle = {
@@ -92,7 +93,7 @@ export default function EditCardPage({params}) {
       <form onSubmit={putCard}>
         <label>
           Type:
-          <select style={formStyle} type="text" placeholder="type" value={type} onChange={(e) => {
+          <select style={{display: "inline"}} type="text" placeholder="type" value={type} onChange={(e) => {
             setType(e.target.value)
           }}>
             <option value="" selected disabled hidden>Choose Type</option>

@@ -7,6 +7,6 @@ type Card struct {
 	Cost  *int    `json:"cost"`
 	Text  *string `json:"text"`
 	Image *string `json:"image"`
-	Stat1 *int    `json:"stat1"`
-	Stat2 *int    `json:"stat2"`
+	Stat1 *string `json:"stat1"`
+	Stat2 *string `json:"stat2"`
 }
