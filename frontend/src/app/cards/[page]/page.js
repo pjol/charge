@@ -51,7 +51,7 @@ const Home = ({params}) => {
   }
 
   const getCards = async (page = 0) => {
-    const res = await fetch("http://localhost:8080/cards?page=" + page, {
+    const res = await fetch("http://" + process.env.NEXT_PUBLIC_SERVER_ADDRESS + ":8080/cards?page=" + page, {
       method: "GET"
     })
     const c = (await res.json())

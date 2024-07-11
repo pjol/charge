@@ -15,7 +15,7 @@ func AppRouter() *chi.Mux {
 	r := chi.NewRouter()
 
 	r.Use(cors.Handler(cors.Options{
-		AllowedOrigins:   []string{"http://localhost:3000", "https://localhost:3000"},
+		AllowedOrigins:   []string{"http://localhost:3000", "https://localhost:3000", "*"},
 		AllowedMethods:   []string{"GET", "POST", "PUT", "DELETE", "OPTIONS"},
 		AllowedHeaders:   []string{"Accept", "Authorization", "Content-Type", "X-CSRF-Token", "Card-Count", "Card-Max"},
 		ExposedHeaders:   []string{"Link", "Card-Count", "Card-Max"},

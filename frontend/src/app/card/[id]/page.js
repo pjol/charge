@@ -21,7 +21,7 @@ const CardPage = ({params}) => {
   useEffect(() => {
     setLoading(true)
     const getCard = async () => {
-      const res = await fetch("http://localhost:8080/cards?id=" + params.id, {
+      const res = await fetch("http://" + process.env.NEXT_PUBLIC_SERVER_ADDRESS + ":8080/cards?id=" + params.id, {
         method: "GET"
       })
       const count = (res.headers.get("Card-Max") * 1) || 0

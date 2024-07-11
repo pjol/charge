@@ -34,14 +34,14 @@ export default function CreateCardPage() {
 
   const postCard = async (e) => {
     e.preventDefault()
-    const res = await fetch("http://localhost:8080/cards", {
+    const res = await fetch("http://" + process.env.NEXT_PUBLIC_SERVER_ADDRESS + ":8080/cards", {
       method: "POST",
       body: JSON.stringify(cardData)
     })
     const count = res.headers.get("Card-Max")
 
     if(res.status === 201) {
-      router.push("http://localhost:3000/card/" + ((count * 1) + 1))
+      router.push("http://" + process.env.NEXT_PUBLIC_SERVER_ADDRESS + ":3000/card/" + ((count * 1) + 1))
     } else {
       setError("error adding card")
     }

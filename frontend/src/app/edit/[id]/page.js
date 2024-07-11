@@ -20,7 +20,7 @@ export default function EditCardPage({params}) {
 
   useEffect(() => {
     const getCard = async () => {
-      const res = await fetch("http://localhost:8080/cards?id=" + params.id, {
+      const res = await fetch("http://" + process.env.NEXT_PUBLIC_SERVER_ADDRESS + ":8080/cards?id=" + params.id, {
         method: "GET"
       })
 
@@ -58,14 +58,14 @@ export default function EditCardPage({params}) {
 
   const putCard = async (e) => {
     e.preventDefault()
-    const res = await fetch("http://localhost:8080/cards", {
+    const res = await fetch("http://" + process.env.NEXT_PUBLIC_SERVER_ADDRESS + ":8080/cards", {
       method: "PUT",
       body: JSON.stringify(cardData)
     })
     const count = res.headers.get("Card-Count")
 
     if(res.status === 202) {
-      router.push("http://localhost:3000/card/" + params.id)
+      router.push("/card/" + params.id)
     } else {
       setError("error adding card")
     }
