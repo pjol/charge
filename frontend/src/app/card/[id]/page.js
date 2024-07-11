@@ -14,6 +14,9 @@ const CardPage = ({params}) => {
     textAlign: "center"
   }
 
+  const cardWrapperStyle = {
+  }
+
 
   useEffect(() => {
     setLoading(true)
@@ -21,18 +24,20 @@ const CardPage = ({params}) => {
       const res = await fetch("http://localhost:8080/cards?id=" + params.id, {
         method: "GET"
       })
-      const count = res.headers.get("Card-Count") || 0
+      const count = (res.headers.get("Card-Max") * 1) || 0
+      console.log(count)
+      const status = res.status
 
-      if(res.status == 404 && params.id < count) {
+      if(status == 404 && params.id * 1 < count * 1) {
         router.replace("/card/" + (params.id * 1 + 1))
+      } else {
+        const c = (await res.json())
+        setCardCount(count)
+
+
+        setLoading(false)
+        setCard(c.id ? c : null)
       }
-
-      const c = (await res.json())
-      setCardCount(count)
-
-
-      setLoading(false)
-      setCard(c.id ? c : null)
     }
 
     getCard()
@@ -44,20 +49,32 @@ const CardPage = ({params}) => {
 
   return (
       <div style={parentStyle}>
-        {card ?
-          <Card
-            data={card}
-          /> : <div>{loading ? "Loading..." : "No Card Found"}</div>}
+          {card ?
+        <div style={cardWrapperStyle}>
+            <Card
+              data={card}
+            />
+        </div> : <div>{loading ? "Loading..." : "No Card Found"}</div>}
+
           <br />
           <button onClick={() => {
-            console.log("count: ", cardCount)
-            console.log("id: ", params.id)
-            if(cardCount !== null && params.id === cardCount) {
+            router.back()
+          }}>
+            BACK
+          </button>
+          <button onClick={() => {
+            router.push("/edit/" + params.id)
+          }}>
+            EDIT
+          </button>
+          <button onClick={() => {
+            if(cardCount !== null && params.id * 1 === cardCount * 1) {
               router.push("/card/1")
             } else if(cardCount !== null) {
+              console.log(params.id, cardCount)
               router.push("/card/" + ((params.id * 1) + 1))
             }
-      }}> NEXT </button>
+          }}> NEXT </button>
       </div>
   )
 }

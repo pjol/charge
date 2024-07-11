@@ -13,7 +13,7 @@ import BoonImage from '@/components/cardTypes/images/BoonImage'
 import InterventionImage from '@/components/cardTypes/images/InterventionImage'
 
 
-const Card = ({data, size = 150}) => {
+const Card = ({data, size = 125}) => {
   useEffect(() => {
     console.log(data.name, data.type)
   }, [data])
@@ -108,7 +108,8 @@ const Card = ({data, size = 150}) => {
     fontSize: size * .13 + "px",
     fontFamily: "Copperplate",
     backgroundColor: "lightGray",
-    textAlign: "center"
+    textAlign: "center",
+    margin: "auto"
   }
 
   const interiorFormat = {

@@ -6,11 +6,10 @@ import { useRouter } from "next/navigation"
 
 const Home = ({params}) => {
   const router = useRouter()
-  router.replace("/cards/0")
 
-  console.log("id: ", params[0])
+  console.log("id: ", params.page)
 
-  const [cardPage, setCardPage] = useState(0)
+  const [cardPage, setCardPage] = useState(params.page || 0)
   const [cards, setCards] = useState([])
   const [count, setCount] = useState(0)
   const cardStatus = useMemo(() => {

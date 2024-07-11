@@ -1,10 +1,10 @@
 "use client"
 
-import { useState, useMemo } from "react"
+import { useState, useMemo, useEffect } from "react"
 import { useRouter } from "next/navigation"
 import Card from "@/components/Card"
 
-export default function CreateCardPage() {
+export default function EditCardPage({params}) {
 
   const router = useRouter()
 
@@ -18,6 +18,29 @@ export default function CreateCardPage() {
 
   const [error, setError] = useState("")
 
+  useEffect(() => {
+    const getCard = async () => {
+      const res = await fetch("http://localhost:8080/cards?id=" + params.id, {
+        method: "GET"
+      })
+
+      if(status == 404) {
+        router.back()
+      }
+      const c = (await res.json())
+
+      setName(c.name)
+      setCost(c.cost)
+      setImage(c.image)
+      setType(c.type)
+      setText(c.text)
+      setStat1(c.stat1)
+      setStat2(c.stat2)
+    }
+
+    getCard()
+  }, [])
+
 
   const cardData = useMemo(() => {
     console.log(name)
@@ -28,20 +51,21 @@ export default function CreateCardPage() {
       type,
       text,
       stat1: stat1 * 1,
-      stat2: stat2 * 1
+      stat2: stat2 * 1,
+      id: params.id * 1
     }
   }, [name, cost, image, type, text, stat1, stat2])
 
-  const postCard = async (e) => {
+  const putCard = async (e) => {
     e.preventDefault()
     const res = await fetch("http://localhost:8080/cards", {
-      method: "POST",
+      method: "PUT",
       body: JSON.stringify(cardData)
     })
-    const count = res.headers.get("Card-Max")
+    const count = res.headers.get("Card-Count")
 
-    if(res.status === 201) {
-      router.push("http://localhost:3000/card/" + ((count * 1) + 1))
+    if(res.status === 202) {
+      router.push("http://localhost:3000/card/" + params.id)
     } else {
       setError("error adding card")
     }
@@ -65,7 +89,7 @@ export default function CreateCardPage() {
   <div style={cardEditorStyle}>
     <Card data={cardData} />
     <div>
-      <form onSubmit={postCard}>
+      <form onSubmit={putCard}>
         <label>
           Type:
           <select style={formStyle} type="text" placeholder="type" value={type} onChange={(e) => {
